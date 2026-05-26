@@ -74,7 +74,7 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#contact" className="btn-primary hidden lg:inline-flex" data-cursor="hover">
+          <a href="#contact" className="btn-primary !hidden lg:!inline-flex" data-cursor="hover">
             <span>CONTACT</span>
             <span aria-hidden>→</span>
           </a>

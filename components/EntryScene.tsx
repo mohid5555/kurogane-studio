@@ -118,19 +118,19 @@ export default function EntryScene({ onEnter }: { onEnter: () => void }) {
 
       {/* Top label */}
       <motion.div
-        className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-3 label-mono"
+        className="absolute top-6 sm:top-8 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 label-mono whitespace-nowrap text-[10px] sm:text-xs px-4"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: phase === "slashing" ? 0 : 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8 }}
       >
-        <span className="h-px w-12 bg-white/30" />
+        <span className="h-px w-6 sm:w-12 bg-white/30" />
         <span>MOHID_GREAT // SYSTEM ONLINE</span>
-        <span className="h-px w-12 bg-white/30" />
+        <span className="h-px w-6 sm:w-12 bg-white/30" />
       </motion.div>
 
       {/* Bottom telemetry */}
       <motion.div
-        className="absolute bottom-8 left-8 label-mono space-y-1"
+        className="absolute bottom-6 sm:bottom-8 left-4 sm:left-8 label-mono space-y-1 hidden sm:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: phase === "slashing" ? 0 : 0.7 }}
         transition={{ delay: 0.6, duration: 0.8 }}
@@ -140,7 +140,7 @@ export default function EntryScene({ onEnter }: { onEnter: () => void }) {
         <div>RUNTIME &nbsp; v1.0 / CHROME</div>
       </motion.div>
       <motion.div
-        className="absolute bottom-8 right-8 label-mono space-y-1 text-right"
+        className="absolute bottom-6 sm:bottom-8 right-4 sm:right-8 label-mono space-y-1 text-right hidden sm:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: phase === "slashing" ? 0 : 0.7 }}
         transition={{ delay: 0.6, duration: 0.8 }}
@@ -167,26 +167,26 @@ export default function EntryScene({ onEnter }: { onEnter: () => void }) {
       <AnimatePresence>
         {phase !== "slashing" && (
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-end pb-32 pointer-events-none"
+            className="absolute inset-0 flex flex-col items-center justify-end pb-20 sm:pb-32 px-4 pointer-events-none text-center"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ delay: 0.8, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
           >
-            <div className="label-mono mb-3 animate-flicker">
+            <div className="label-mono mb-3 animate-flicker text-[10px] sm:text-xs">
               HOLD &nbsp;◆&nbsp; DRAG &nbsp;◆&nbsp; RELEASE
             </div>
-            <h1 className="font-display text-4xl md:text-6xl font-black tracking-hyper text-chrome">
-              UNSHEATH&nbsp;THE&nbsp;PORTFOLIO
+            <h1 className="font-display text-2xl sm:text-4xl md:text-6xl font-black tracking-wider sm:tracking-hyper text-chrome leading-tight">
+              UNSHEATH THE PORTFOLIO
             </h1>
-            <div className="mt-6 w-64 h-[2px] bg-white/10 overflow-hidden">
+            <div className="mt-6 w-44 sm:w-64 h-[2px] bg-white/10 overflow-hidden">
               <motion.div
                 className="h-full bg-white"
                 style={{ width: `${charge * 100}%` }}
                 transition={{ type: "tween" }}
               />
             </div>
-            <div className="label-mono mt-3">
+            <div className="label-mono mt-3 text-[10px] sm:text-xs">
               {phase === "charging" ? "FORGING CUT..." : "STANDBY"}
             </div>
           </motion.div>
