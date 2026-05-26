@@ -1,21 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * Subtle Japanese-themed ambient layer that lives behind all content.
  * Renders:
  *  - A faint vermillion sun gradient on the right
  *  - A barely-visible torii gate silhouette on the left
- *  - ~22 sakura petals drifting diagonally down the viewport
+ *  - Sakura petals drifting diagonally (reduced count on mobile for perf)
  *
  * Performance: all CSS transforms / opacity. Pointer-events-none.
  * Mounted only after the entry scene completes.
  */
 export default function SakuraAmbient() {
+  const [petalCount, setPetalCount] = useState(22);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isSmall = window.matchMedia("(max-width: 768px)").matches;
+    const isCoarse = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (isSmall || isCoarse) setPetalCount(8);
+  }, []);
+
   const petals = useMemo(() => {
-    return Array.from({ length: 22 }).map((_, i) => {
+    return Array.from({ length: petalCount }).map((_, i) => {
       const left = Math.random() * 100;
       const size = 8 + Math.random() * 10;
       const duration = 18 + Math.random() * 22;
@@ -25,7 +34,7 @@ export default function SakuraAmbient() {
       const opacity = 0.18 + Math.random() * 0.35;
       return { i, left, size, duration, delay, drift, rot, opacity };
     });
-  }, []);
+  }, [petalCount]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">

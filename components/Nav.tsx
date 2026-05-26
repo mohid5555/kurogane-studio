@@ -49,14 +49,14 @@ export default function Nav() {
       transition={{ duration: 0.8, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }}
       className="fixed top-0 inset-x-0 z-50"
     >
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-5 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-3 group" data-cursor="hover">
-          <span className="relative flex items-center justify-center w-9 h-9 chrome-border">
-            <span className="text-chrome font-display text-sm font-black">{studio.brandShort}</span>
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-10 py-4 sm:py-5 flex items-center justify-between gap-3">
+        <a href="#hero" className="flex items-center gap-2 sm:gap-3 group min-w-0" data-cursor="hover">
+          <span className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 chrome-border shrink-0">
+            <span className="text-chrome font-display text-[11px] sm:text-sm font-black">{studio.brandShort}</span>
           </span>
-          <div className="leading-none">
-            <div className="font-display font-black tracking-hyper text-xs">{studio.brand}</div>
-            <div className="label-mono mt-1">{studio.kanji} / DEV</div>
+          <div className="leading-none min-w-0">
+            <div className="font-display font-black tracking-hyper text-[11px] sm:text-xs truncate">{studio.brand}</div>
+            <div className="label-mono mt-1 hidden sm:block">{studio.kanji} / DEV</div>
           </div>
         </a>
 
@@ -74,7 +74,7 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#contact" className="btn-primary hidden md:inline-flex" data-cursor="hover">
+          <a href="#contact" className="btn-primary hidden lg:inline-flex" data-cursor="hover">
             <span>CONTACT</span>
             <span aria-hidden>→</span>
           </a>

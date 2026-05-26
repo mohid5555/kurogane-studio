@@ -302,6 +302,25 @@ a, button { cursor: none; }
   transform: translate(-50%, -50%);
   transition: width .25s, height .25s, border-color .25s, box-shadow .25s;
 }
+/* Hide custom cursor on touch devices as defense-in-depth */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+}
+
+/* ─── mobile polish ─── */
+html { -webkit-text-size-adjust: 100%; }
+body {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+@media (hover: none), (pointer: coarse) {
+  /* Restore system cursor on touch (don't force "none") */
+  body, a, button { cursor: auto; }
+  /* Reduce ambient noise on mobile */
+  .noise { opacity: 0.35; }
+}
 
 /* ─── shared keyframes ─── */
 @keyframes pulse {
