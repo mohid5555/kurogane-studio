@@ -23,7 +23,7 @@ const mono = JetBrains_Mono({
 });
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://mohid-great.dev";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://mohidgreat-portfolio.vercel.app";
 const SITE_TITLE = "MOHID_GREAT // Roblox Developer";
 const SITE_DESCRIPTION =
   "Solo full-stack Roblox developer — scripting, UI, building, VFX, animation. Four live titles, three in the forge. Commissions open. 24-hour reply guaranteed.";
