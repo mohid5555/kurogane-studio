@@ -37,7 +37,7 @@ export default function ScrollToTop() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/15 bg-ink-900/80 backdrop-blur-md flex items-center justify-center group hover:border-accent/60 transition-colors"
+          className="fixed right-6 md:right-8 z-40 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/15 bg-ink-900/80 backdrop-blur-md flex items-center justify-center group hover:border-accent/60 transition-colors bottom-[max(1.5rem,env(safe-area-inset-bottom))] md:bottom-[max(2rem,env(safe-area-inset-bottom))]"
           data-cursor="hover"
           style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}
         >

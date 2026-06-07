@@ -5,21 +5,24 @@ import { useEffect, useMemo } from "react";
 import { studio } from "@/lib/data";
 import { useLiveGames, useProfile } from "@/lib/useLiveData";
 import { formatNumber } from "@/lib/format";
+import { useIsTouch } from "@/lib/useIsTouch";
 
 export default function Hero() {
+  const isTouch = useIsTouch();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const px = useSpring(useTransform(mx, [-1, 1], [-20, 20]), { stiffness: 60, damping: 18 });
   const py = useSpring(useTransform(my, [-1, 1], [-14, 14]), { stiffness: 60, damping: 18 });
 
   useEffect(() => {
+    if (isTouch) return; // no mouse parallax on touch
     const onMove = (e: PointerEvent) => {
       mx.set((e.clientX / window.innerWidth) * 2 - 1);
       my.set((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("pointermove", onMove);
     return () => window.removeEventListener("pointermove", onMove);
-  }, [mx, my]);
+  }, [mx, my, isTouch]);
 
   const { data: games } = useLiveGames();
   const profile = useProfile(studio.roblox.userId);

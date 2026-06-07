@@ -3,6 +3,7 @@
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { skills } from "@/lib/data";
+import { useIsTouch } from "@/lib/useIsTouch";
 
 const team = [
   { role: "SCRIPTERS", k: "Luau systems & networking" },
@@ -184,6 +185,7 @@ function NodeCard({
   inView: boolean;
   children: React.ReactNode;
 }) {
+  const isTouch = useIsTouch();
   const cardRef = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
@@ -209,12 +211,14 @@ function NodeCard({
   return (
     <motion.div
       ref={cardRef}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+      onMouseMove={isTouch ? undefined : onMove}
+      onMouseLeave={isTouch ? undefined : onLeave}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: index * 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200, transformStyle: "preserve-3d" }}
+      style={isTouch
+        ? { transformPerspective: 1200, transformStyle: "preserve-3d" }
+        : { rotateX: rx, rotateY: ry, transformPerspective: 1200, transformStyle: "preserve-3d" }}
       className="chrome-border glass p-5 md:p-6 relative overflow-hidden group will-change-transform"
       data-cursor="hover"
     >

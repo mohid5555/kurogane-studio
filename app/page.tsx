@@ -27,6 +27,25 @@ export default function Page() {
 
   useEffect(() => {
     setMounted(true);
+
+    // Skip the WebGL hold-to-unsheath entry on touch devices, low-power
+    // devices, and when the user prefers reduced motion. The katana gesture
+    // doesn't translate to touch and the Three.js canvas is the biggest
+    // crash / jank risk on mobile browsers.
+    const mm = typeof window !== "undefined" ? window.matchMedia : null;
+    const isTouch = mm?.("(hover: none) and (pointer: coarse)").matches ?? false;
+    const reduced = mm?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const lowMem = typeof navigator !== "undefined"
+      // @ts-expect-error - deviceMemory is non-standard but widely supported
+      && typeof navigator.deviceMemory === "number"
+      // @ts-expect-error
+      && navigator.deviceMemory <= 2;
+
+    if (isTouch || reduced || lowMem) {
+      setEntered(true);
+      return;
+    }
+
     document.body.style.overflow = "hidden";
   }, []);
 
@@ -38,7 +57,7 @@ export default function Page() {
     <ToastProvider>
       {mounted && <Cursor />}
       <AnimatePresence>
-        {!entered && <EntryScene key="entry" onEnter={() => setEntered(true)} />}
+        {mounted && !entered && <EntryScene key="entry" onEnter={() => setEntered(true)} />}
       </AnimatePresence>
 
       {entered && <SmoothScroll />}

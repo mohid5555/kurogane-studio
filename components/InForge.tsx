@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { inForgeProjects } from "@/lib/data";
+import { useIsTouch } from "@/lib/useIsTouch";
 
 export default function InForge() {
   return (
@@ -46,6 +47,7 @@ export default function InForge() {
 type Project = (typeof inForgeProjects)[number];
 
 function ProjectCard({ p, index }: { p: Project; index: number }) {
+  const isTouch = useIsTouch();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -60,17 +62,17 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
   return (
     <motion.div
       ref={ref}
-      onPointerMove={(e) => {
+      onPointerMove={isTouch ? undefined : (e) => {
         const r = ref.current?.getBoundingClientRect();
         if (!r) return;
         mx.set(e.clientX - (r.left + r.width / 2));
         my.set(e.clientY - (r.top + r.height / 2));
       }}
-      onPointerLeave={() => {
+      onPointerLeave={isTouch ? undefined : () => {
         mx.set(0);
         my.set(0);
       }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1400 }}
+      style={isTouch ? { transformPerspective: 1400 } : { rotateX: rx, rotateY: ry, transformPerspective: 1400 }}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-12%" }}

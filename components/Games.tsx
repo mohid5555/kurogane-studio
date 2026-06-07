@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { releasedGames, type ReleasedGame } from "@/lib/data";
 import { useLiveGames, type LiveGame } from "@/lib/useLiveData";
 import { formatNumber, placeUrl } from "@/lib/format";
+import { useIsTouch } from "@/lib/useIsTouch";
 
 export default function Games() {
   const { data } = useLiveGames();
@@ -43,6 +44,7 @@ export default function Games() {
 /* ─────────────────────────────────────────────────────────── */
 
 function FeaturedCard({ catalog, live }: { catalog: ReleasedGame; live?: LiveGame }) {
+  const isTouch = useIsTouch();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -54,17 +56,17 @@ function FeaturedCard({ catalog, live }: { catalog: ReleasedGame; live?: LiveGam
   return (
     <motion.div
       ref={ref}
-      onPointerMove={(e) => {
+      onPointerMove={isTouch ? undefined : (e) => {
         const r = ref.current?.getBoundingClientRect();
         if (!r) return;
         mx.set(e.clientX - (r.left + r.width / 2));
         my.set(e.clientY - (r.top + r.height / 2));
       }}
-      onPointerLeave={() => {
+      onPointerLeave={isTouch ? undefined : () => {
         mx.set(0);
         my.set(0);
       }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1400 }}
+      style={isTouch ? { transformPerspective: 1400 } : { rotateX: rx, rotateY: ry, transformPerspective: 1400 }}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-15%" }}
@@ -166,6 +168,7 @@ function GameCard({
   live?: LiveGame;
   index: number;
 }) {
+  const isTouch = useIsTouch();
   const ref = useRef<HTMLAnchorElement>(null);
   const [hover, setHover] = useState(false);
   const mx = useMotionValue(0);
@@ -179,19 +182,19 @@ function GameCard({
       target="_blank"
       rel="noopener noreferrer"
       ref={ref}
-      onPointerMove={(e) => {
+      onPointerMove={isTouch ? undefined : (e) => {
         const r = ref.current?.getBoundingClientRect();
         if (!r) return;
         mx.set(e.clientX - (r.left + r.width / 2));
         my.set(e.clientY - (r.top + r.height / 2));
       }}
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => {
+      onPointerEnter={isTouch ? undefined : () => setHover(true)}
+      onPointerLeave={isTouch ? undefined : () => {
         setHover(false);
         mx.set(0);
         my.set(0);
       }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
+      style={isTouch ? { transformPerspective: 1200 } : { rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-15%" }}
